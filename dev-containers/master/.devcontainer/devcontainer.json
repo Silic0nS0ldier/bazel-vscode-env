@@ -15,7 +15,13 @@
 			"settings": {
 				"bazel.enableCodeLens": true,
 				"bazel.lsp.command": "starpls",
-				"bazel.lsp.args": ["server"]
+				"bazel.lsp.args": ["server"],
+				"[java]": {
+					// Java extension defaults to true, which is problematic as it has an incomplete view of the world.
+					// e.g. imports may be removed if it thinks some are ambiguous.
+					// As a matter of safety (and sanity) we disable it.
+					"editor.formatOnSave": false
+				}
 			}
 		}
 	}
