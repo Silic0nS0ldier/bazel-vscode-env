@@ -10,7 +10,7 @@
 				"zxh404.vscode-proto3",
 				"ms-vscode.cpptools",
 				"galexite.bazel-cpp-tools",
-				"georgewfraser.vscode-javac"
+				"siliconsoldier.java-with-bazel"
 			],
 			"settings": {
 				"bazel.enableCodeLens": true,
