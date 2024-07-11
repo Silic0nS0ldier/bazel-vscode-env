@@ -1,7 +1,10 @@
 {
-	"name": "Bazel from master",
-	"build": {
-		"dockerfile": "./Dockerfile"
+	"name": "Bazel",
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+	"features": {
+		"./feature-bazel": {}
+		// TODO Add Java, it is needed for integration tests
+		// TODO Add Android SDK, it is needed for certain repositories
 	},
 	"customizations": {
 		"vscode": {
@@ -15,7 +18,9 @@
 			"settings": {
 				"bazel.enableCodeLens": true,
 				"bazel.lsp.command": "starpls",
-				"bazel.lsp.args": ["server"],
+				"bazel.lsp.args": [
+					"server"
+				],
 				"[java]": {
 					// Java extension defaults to true, which is problematic as it has an incomplete view of the world.
 					// e.g. imports may be removed if it thinks some are ambiguous.
