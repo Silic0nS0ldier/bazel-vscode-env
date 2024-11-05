@@ -19,7 +19,8 @@
 				"bazel.enableCodeLens": true,
 				"bazel.lsp.command": "starpls",
 				"bazel.lsp.args": [
-					"server"
+					"server",
+					"--experimental_infer_ctx_attributes"
 				],
 				"[java]": {
 					// Java extension defaults to true, which is problematic as it has an incomplete view of the world.
