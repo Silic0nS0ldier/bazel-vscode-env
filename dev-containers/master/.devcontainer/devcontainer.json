@@ -2,7 +2,10 @@
 	"name": "Bazel",
 	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 	"features": {
-		"./feature-bazel": {}
+		"./feature-bazel": {},
+		// Required by some non-hermetic rules
+		// e.g. pkg_tar
+		"ghcr.io/devcontainers/features/python:1": {}
 		// TODO Add Java, it is needed for integration tests
 		// TODO Add Android SDK, it is needed for certain repositories
 	},
