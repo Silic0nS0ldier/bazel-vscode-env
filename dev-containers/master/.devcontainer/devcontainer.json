@@ -5,8 +5,9 @@
 		"./feature-bazel": {},
 		// Required by some non-hermetic rules
 		// e.g. pkg_tar
-		"ghcr.io/devcontainers/features/python:1": {}
-		// TODO Add Java, it is needed for integration tests
+		"ghcr.io/devcontainers/features/python:1": {},
+		// Required for `REPIN=1 bazel run @maven//:pin`
+		"ghcr.io/devcontainers/features/java:1": {}
 		// TODO Add Android SDK, it is needed for certain repositories
 	},
 	"customizations": {
