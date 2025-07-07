@@ -29,3 +29,8 @@ chmod +x \
     /usr/local/bin/buildozer \
     /usr/local/bin/unused_deps \
     /usr/local/bin/starpls
+
+# 'ed' used in src/test/shell/bazel/starlark_repository_test.sh@test_disallow_unverified_http
+sudo apt update  # Populate package metadata store
+sudo apt install ed
+
