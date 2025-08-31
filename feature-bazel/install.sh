@@ -11,7 +11,7 @@ BAZELISK_VERSION="v1.27.0"
 # renovate: datasource=github-tags depName=bazelbuild/buildtools
 BUILDTOOLS_VERSION="v8.2.1"
 # renovate: datasource=github-tags depName=withered-magic/starpls
-STARPLS_VERSION="v0.1.21"
+STARPLS_VERSION="v0.1.22"
 
 if [[ $ARCH == "arm64" ]] || [[ $ARCH == "aarch64" ]]; then
     curl "https://github.com/bazelbuild/bazelisk/releases/download/${BAZELISK_VERSION}/bazelisk-linux-arm64" -Lo /usr/local/bin/bazel
