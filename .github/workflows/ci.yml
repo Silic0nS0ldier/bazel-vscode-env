@@ -50,7 +50,7 @@ jobs:
         with:
           imageName: ${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}
           imageTag: ${{ runner.arch }}
-          configFile: src/devcontainer.json
+          configFile: src/.devcontainer/devcontainer.json
           runCmd: echo "Built successfully"
           push: never
       - name: Resolve digest
