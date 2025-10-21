@@ -12,7 +12,7 @@ on:
       - synchronize
 env:
   OPT_REGISTRY: ghcr.io
-  OPT_NAMESPACE: Silic0nS0ldier
+  OPT_NAMESPACE: silic0ns0ldier
   OPT_IMAGE: bazel-vscode-env
 jobs:
   devcontainer-tag:
