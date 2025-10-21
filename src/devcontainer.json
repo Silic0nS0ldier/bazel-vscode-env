@@ -26,7 +26,9 @@
 				"bazel.lsp.command": "starpls",
 				"bazel.lsp.args": [
 					"server",
-					"--experimental_infer_ctx_attributes"
+					"--experimental_infer_ctx_attributes",
+					"--experimental_use_code_flow_analysis",
+					"--experimental_enable_label_completions"
 				],
 				"[java]": {
 					// Java extension defaults to true, which is problematic as it has an incomplete view of the world.

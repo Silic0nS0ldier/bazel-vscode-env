@@ -1,0 +1,86 @@
+name: "CI"
+on:
+  push:
+    branches:
+      - main
+  # Pull request
+  pull_request:
+    types:
+      # Newly opened
+      - opened
+      # Updated (excludes change of base branch)
+      - synchronize
+env:
+  OPT_REGISTRY: ghcr.io
+  OPT_NAMESPACE: Silic0nS0ldier
+  OPT_IMAGE: bazel-vscode-env
+jobs:
+  devcontainer-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.resolve-tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve tag
+        id: resolve-tag
+        run: |
+          tag=$(git ls-files --stage --full-name src | git hash-object --stdin)
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Check tag up-to-date
+        run: grep "${{ steps.resolve-tag.outputs.tag }}" .devcontainer/devcontainer.json
+  devcontainer-build:
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      packages: write
+    outputs:
+      digest-arm: ${{ steps.resolve-digest.outputs.digest-arm }}
+      digest-x86: ${{ steps.resolve-digest.outputs.digest-x86 }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3.4.0
+        with:
+          registry: ${{ env.OPT_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: devcontainers/ci@v0.3
+        with:
+          imageName: ${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}
+          imageTag: ${{ runner.arch }}
+          configFile: .devcontainer/def/devcontainer.json
+          runCmd: echo "Built successfully"
+          push: never
+      - name: Resolve digest
+        id: resolve-digest
+        run: |
+          digest=$(docker images --no-trunc --quiet "${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}:${{ runner.arch }}")
+          echo "digest-${{ matrix.runner == 'ubuntu-latest' && 'x86' || 'arm' }}=$digest" >> "$GITHUB_OUTPUT"
+      - name: Push
+        run: docker image push ${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}:${{ runner.arch }}
+  devcontainer-merge:
+    runs-on: ubuntu-latest
+    needs: [devcontainer-tag, devcontainer-build]
+    permissions:
+      packages: write
+    steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3.4.0
+        with:
+          registry: ${{ env.OPT_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull arm
+        run: docker pull ${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}@${{ needs.devcontainer-build.outputs.digest-arm }}
+      - name: Pull x86
+        run: docker pull ${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}@${{ needs.devcontainer-build.outputs.digest-x86 }}
+      - name: Create multi-arch manifest
+        run: |
+          docker manifest create \
+            ${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}:${{ needs.devcontainer-tag.outputs.tag }} \
+            --amend ${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}@${{ needs.devcontainer-build.outputs.digest-arm }} \
+            --amend ${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}@${{ needs.devcontainer-build.outputs.digest-x86 }}
+      - name: Push
+        run: docker manifest push ${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}:${{ needs.devcontainer-tag.outputs.tag }}
