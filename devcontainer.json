@@ -1,4 +1,4 @@
 {
     "name": "Bazel (prebuilt)",
-	"image": "ghcr.io/Silic0nS0ldier/bazel-vscode-env:59841f049121733955999cd834fc6a656eb21666"
+	"image": "ghcr.io/Silic0nS0ldier/bazel-vscode-env:756e6a625147dac7b5b9a99edac45a0f2440a113"
 }
