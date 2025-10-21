@@ -38,8 +38,10 @@ chmod +x \
     /usr/local/bin/starpls
 
 # 'ed' used in src/test/shell/bazel/starlark_repository_test.sh@test_disallow_unverified_http
-# 'uuidgen' (from 'uuidgen-runtime') used in src/test/shell/unittest.bash 
+# 'uuidgen' (from 'uuidgen-runtime') used in src/test/shell/unittest.bash
+# 'file', which is mandatory for POSIX compliance (and used in various Bazel scripts) yet missing
 sudo apt update  # Populate package metadata store
 sudo apt install \
     ed \
-    uuidgen-runtime
+    uuidgen-runtime \
+    file
