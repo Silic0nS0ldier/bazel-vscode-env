@@ -56,6 +56,7 @@ jobs:
       - name: Resolve digest
         id: resolve-digest
         run: |
+          docker inspect "${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}:${{ runner.arch }}"
           digest=$(docker inspect --format='{{.Id}}' "${{ env.OPT_REGISTRY }}/${{ env.OPT_NAMESPACE }}/${{ env.OPT_IMAGE }}:${{ runner.arch }}")
           echo "digest-${{ matrix.runner == 'ubuntu-latest' && 'x86' || 'arm' }}=$digest" >> "$GITHUB_OUTPUT"
       - name: Push
