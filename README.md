@@ -23,7 +23,3 @@ If running the devcontainer with the VSCode integration, the following extension
 4. Open workspace directory in VSCode.
 5. Reopen in devcontainer.
 6. `code bazel` in terminal to VSCode is running under `bazel` repository. Necessary for Java LSP to resolve workspace.
-
-## TODO
-
-- [ ] Publish image so container starts faster.

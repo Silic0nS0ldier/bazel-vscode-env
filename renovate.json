@@ -9,7 +9,7 @@
       "description": "Bazel devcontainer feature",
       "customType": "regex",
       "depTypeTemplate": "devcontainer.feature.bazel",
-      "managerFilePatterns": ["feature-bazel/install.sh"],
+      "managerFilePatterns": ["src/.devcontainer/feature-bazel/install.sh"],
       "matchStrings": [
         "#\\s*renovate:\\s*(datasource=(?<datasource>.*?) )?depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s*.*?_VERSION=\"(?<currentValue>.*)\""
       ]
