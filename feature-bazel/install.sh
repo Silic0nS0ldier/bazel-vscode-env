@@ -38,5 +38,8 @@ chmod +x \
     /usr/local/bin/starpls
 
 # 'ed' used in src/test/shell/bazel/starlark_repository_test.sh@test_disallow_unverified_http
+# 'uuidgen' (from 'uuidgen-runtime') used in src/test/shell/unittest.bash 
 sudo apt update  # Populate package metadata store
-sudo apt install ed
+sudo apt install \
+    ed \
+    uuidgen-runtime
