@@ -20,7 +20,7 @@ jobs:
     outputs:
       tag: ${{ steps.resolve-tag.outputs.tag }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Resolve tag
         id: resolve-tag
         run: |
@@ -39,7 +39,7 @@ jobs:
       image-arm: ${{ steps.resolve-digest.outputs.image-arm }}
       image-x86: ${{ steps.resolve-digest.outputs.image-x86 }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Log in to the Container registry
         uses: docker/login-action@v3.6.0
         with:
