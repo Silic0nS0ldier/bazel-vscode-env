@@ -46,3 +46,9 @@ sudo apt install -y \
     uuid-runtime \
     file
 sudo apt clean
+
+# Bazel configuration
+cat > /etc/bazel.bazelrc <<EOL
+common --repository_cache=/var/cache/bazel/repo
+common --disk_cache=/var/cache/bazel/disk
+EOL
